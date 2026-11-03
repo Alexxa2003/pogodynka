@@ -1,0 +1,28 @@
+App\Entity\Measurment:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [location, date]
+              message: 'A forecast for this location and date already exists.'
+              groups: [create]
+    properties:
+        location:
+            - NotNull:
+                  message: 'Please choose a location.'
+                  groups: [create, edit]
+        date:
+            - NotNull:
+                  message: 'Please enter a forecast date.'
+                  groups: [create, edit]
+            - GreaterThanOrEqual:
+                  value: today
+                  message: 'A new forecast cannot be in the past.'
+                  groups: [create]
+        celsius:
+            - NotBlank:
+                  message: 'Please enter a temperature.'
+                  groups: [create, edit]
+            - Range:
+                  min: -60
+                  max: 60
+                  notInRangeMessage: 'Temperature must be between {{ min }} and {{ max }} °C.'
+                  groups: [create, edit]

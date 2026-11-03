@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New forecast{% endblock %}
+
+{% block body %}
+    <h1 class="h3 mb-3">Create new forecast</h1>
+
+    {{ include('measurment/_form.html.twig') }}
+
+    <a href="{{ path('app_measurment_index') }}" class="btn btn-link px-0 mt-3">&larr; Back to list</a>
+{% endblock %}

@@ -46,20 +46,44 @@
         <div class="collapse navbar-collapse" id="mainNav">
             {% set route = app.request.attributes.get('_route') %}
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link {{ route starts with 'app_location' ? 'active' }}"
-                       href="{{ path('app_location_index') }}">Locations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ route starts with 'app_measurment' ? 'active' }}"
-                       href="{{ path('app_measurment_index') }}">Forecasts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_location_new') }}">Add location</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_measurment_new') }}">Add forecast</a>
-                </li>
+                {% if is_granted('ROLE_LOCATION_INDEX') %}
+                    <li class="nav-item">
+                        <a class="nav-link {{ route starts with 'app_location' ? 'active' }}"
+                           href="{{ path('app_location_index') }}">Locations</a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_MEASURMENT_INDEX') %}
+                    <li class="nav-item">
+                        <a class="nav-link {{ route starts with 'app_measurment' ? 'active' }}"
+                           href="{{ path('app_measurment_index') }}">Forecasts</a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_LOCATION_NEW') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_location_new') }}">Add location</a>
+                    </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_MEASURMENT_NEW') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_measurment_new') }}">Add forecast</a>
+                    </li>
+                {% endif %}
+
+                {% if app.user %}
+                    <li class="nav-item ms-lg-2">
+                        <span class="nav-link text-light">Zalogowany: <strong>{{ app.user.userIdentifier }}</strong></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light nav-link px-3 text-white" href="{{ path('app_logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-outline-light nav-link px-3 text-white" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

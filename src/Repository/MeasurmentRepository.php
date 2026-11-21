@@ -18,6 +18,7 @@ class MeasurmentRepository extends ServiceEntityRepository
     }
 
 
+
     public function findByLocation(Location $location)
     {
         $qb = $this->createQueryBuilder('m');
